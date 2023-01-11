@@ -17,7 +17,7 @@ async function fetchData(){
     const image_array = []
     //this image array will be filled with JS created images
 
-    for (let i = 0; i < 10; i++){
+    for (let i = 0; i < 9; i++){
         let newImg = document.createElement("img")
         //creating image
 
