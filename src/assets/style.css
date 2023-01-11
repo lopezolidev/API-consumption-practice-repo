@@ -1,0 +1,23 @@
+/* To-do */
+/*  → Create general styling of the page with " * " selector and basic html and css variables
+    → Build general display with grid and flex
+    → Paint and style background and letters
+    → apply media queries if necessary
+*/
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+/* basic styling */
+
+:root {
+    --background-color: blue;
+}
+/* creating variables */
+
+html {
+    font-size: 62.5%;
+}
+/* setting up html font sizing */
