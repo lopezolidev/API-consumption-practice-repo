@@ -13,9 +13,11 @@
 /* basic styling */
 
 :root {
-    --main-color: #1E2762;
-    --secondary-color: #3A4276;
-    --tertiary-text-color: #E3E4EB;
+    --main-color: #ad7ffb;
+    --secondary-color: #92b2fd;
+    --tertiary-text-color: #f9fafe;
+    --additional-color-1: #f594b7;
+    --additional-color-2:#ccd0f6;
     --platzi-color: #98ca3f;
     --subtitles-size: 2.8rem;
     --buttons-font-size: 1.6rem;
@@ -47,15 +49,16 @@ body {
     flex-wrap: wrap;
     gap: 4rem;
     padding-block: 2rem;
-    background-color: var(--main-color);
-    color: white;
+    background-color: white;
+    color: var(--secondary-color);
     font-weight: 600;
     font-size: 2rem;
     text-align: center;
+    border-bottom: 0.1rem solid var(--platzi-color);
 }
 
 .top h3 {
-    color: var(--tertiary-text-color)
+    color: var(--main-color);
 }
 
 .top h3 a {
@@ -70,18 +73,19 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 3.6rem;
-    padding: 2rem;
+    gap: 4rem;
+    padding-block: 3rem;
     width: 100%;
-    background-color: var(--secondary-color);
+    background-color: var(--tertiary-text-color);
 }
 
 .buttons-section h2 {
     width: 100%;
     font-size: var(--subtitles-size);
     padding-block-end: 1.6rem;
-    border-block-end: 0.1rem solid var(--tertiary-text-color);
-    color: var(--tertiary-text-color);
+    border-block-end: 0.1rem solid var(--additional-color-1);
+    color: var(--secondary-color);
+    padding-left: 4rem;
 }
 
 .buttons-section .buttons-bar {
@@ -95,18 +99,28 @@ body {
     outline: none;
     border: none;
     border-radius: 2rem;
-    background-color: var(--tertiary-text-color);
-    color: var(--main-color);
+    background-color: var(--main-color);
+    color: var(--tertiary-text-color);
     font-weight: var(--button-font-weight);
     font-size: var(--buttons-font-size);
     text-align: center;
 }
 
+
+.buttons-bar button:hover {
+    cursor: pointer;
+}
+
         /* ========== Random pics section ========== */
+
+.product-error {
+    font-size: 2rem;
+    text-align: center;
+}
 
 .images-section {
     width: 100%;
-    padding: 3rem;
+    padding: 4rem;
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
@@ -115,26 +129,32 @@ body {
     align-items: center;
 }
 
-.images-section .newImg {
+.images-section .img {
     width: 100%;
-    border-radius: 1.6rem;
+    border-radius: 1rem;
 }
 
+.images-section .newImg0 {
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
 /*  =================== Favorites section styles =================== */
 
 .favorites-section {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    padding: 2rem;
+    padding-block: 2.8rem;
     width: 100%;
-    background-color: var(--secondary-color);
+    background-color: var(--tertiary-text-color);
+    border-block-end: 0.1px solid var(--additional-color-1);
 }
 
 .favorites-section h2 {
-    color: var(--tertiary-text-color);
+    color: var(--main-color);
     padding-block-end: 1.6rem;
-    border-block-end: 0.1rem solid white;
+    padding-left: 4rem;
+    border-block-end: 0.1rem solid var(--platzi-color);
     font-size: var(--subtitles-size);
 }
 
@@ -154,14 +174,18 @@ body {
     border: none;
     outline: none;
     width: max-content;
+    margin-inline-start: 4rem;
     padding: 1.2rem;
-    background-color: var(--tertiary-text-color);
-    color: var(--main-color);
+    background-color: var(--secondary-color);
+    color: var(--tertiary-text-color);
     border-radius: 2rem;
     font-size: var(--buttons-font-size);
     font-weight: var(--button-font-weight);
 }
 
+.favorites-section button:hover {
+    cursor: pointer;
+}
 
 /*  =================== footer styles =================== */
 
@@ -176,5 +200,5 @@ footer {
 
 footer a {
     text-decoration: none;
-    color: var(--platzi-color);
+    color: var(--tertiary-text-color);
 }
