@@ -18,20 +18,28 @@
     <nav class="buttons-section">
         <h2>Random images section</h2>   
         <div class="buttons-bar">
-            <button onclick=fetchData10() class="add-product">Reload products</button>    
-            <button onclick=renderFavorites() class="add-to-favorites">Add to favorites</button>
+            <button onclick="fetchData10()" class="add-product">Reload products</button>    
+            <button onclick="renderFavorites()" class="add-to-favorites">Add to favorites</button>
         </div>
     </nav>
     <section class="images-section">
         <span id="productError" class="product-error"></span>
         <!-- images will go here -->
     </section>
+    <section class="uploading-section">
+        <h2 class="upload-title">Upload the picture of your product</h2>
+        <form id="uploadingForm">
+            <input id="file" type="file" name="file" />
+            <button type="button" onclick="uploadProductPic()">Upload your product's pic!</button>
+        </form>
+            <!-- this is a section for uploading new images of products -->
+    </section>
     <section class="favorites-section">
         <h2>Favorites</h2>
         <div class="favorite-imgs">
             <!-- favorite images -->
         </div>
-        <button onclick=deleteImgs() class="delete-from-favorites">Delete from Favorites</button>
+        <button onclick="deleteImgs()" class="delete-from-favorites">Delete from Favorites</button>
     </section>
     <footer>
         <h4>Made with 💙 by <a href="https://github.com/sergioiscoding">Sergio Lopez</a></h4>

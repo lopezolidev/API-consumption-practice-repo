@@ -5,6 +5,7 @@
 // add buttons functionality to alter the DOM
 // implement parameters to select and vary products selection and exploring section
 
+const API_URL_UPLOAD = "https://api.escuelajs.co/api/v1/files/upload";
 
 const API_URL_PRODUCTS = "https://api.escuelajs.co/api/v1/products";
 //storing api url that we'll be using through this project
@@ -230,6 +231,7 @@ async function uploadNewProduct(){
         method: 'POST',
         headers: {
             "Content-Type": "application/json" 
+            //here refers to the kind of content that our backend supports, most of them support application/json, even though the documentation must clarify how should we load, delete, put or any other HTTP method using a specific Content-Type
         },
         body: JSON.stringify({
             "title": "A brand new special digital product",
@@ -238,6 +240,7 @@ async function uploadNewProduct(){
             "categoryId": 2,
             "images": ["https://placeimg.com/640/480/tech"]
         })
+        //we must stringify the format of the body with JSON to make it a plain text from JSON, because we ignore in which language our backend will process this request
     })
     //sending POST request to the API, this time, manually we're introducing the method, headers and the body, just as the documentation points
     console.log({res})
@@ -251,7 +254,7 @@ async function uploadNewProduct(){
 
 uploadNewProduct();
 deleteImgs();
-deleteImgs();
+
 
 // deleteProduct: Response
 //     body: (...)
@@ -263,3 +266,34 @@ deleteImgs();
 //     statusText: "OK"
 //     type: "cors"
 //     url: "https://api.escuelajs.co/api/v1/products
+
+// Upload product picture function
+
+async function uploadProductPic(){
+    const form = document.getElementById("uploadingForm");
+    const form_Data = new FormData(form);
+
+    console.log(form_Data.get('file'));
+
+    const res = await fetch(API_URL_UPLOAD, {
+        method: "POST",
+        headers: {
+            "Content-type": "multipart/form-data"
+        },
+        body: {
+            "file": form_Data,
+        }
+    });
+
+    const data = await res.json();
+
+    if (res.status !== HTTPerrors.OK && res.status !== 201){
+        productError.innerText = `Sorry, we had a ${res.status} error about ${data.message}`
+        console.log({data})
+    } else {
+        console.log("Your image was uploaded!");
+        console.log({ data });
+        console.log(data.url);
+        //we can call the render favourites images here to load them in favourites section
+    }
+}
