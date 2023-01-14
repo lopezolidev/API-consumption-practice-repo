@@ -22,6 +22,7 @@
     --subtitles-size: 2.8rem;
     --buttons-font-size: 1.6rem;
     --button-font-weight: 600;
+    --favourite-star: url(./imgs/favorite_star.png);
 }
 /* creating variables */
 
@@ -129,15 +130,34 @@ body {
     align-items: center;
 }
 
-.images-section .img {
-    width: 100%;
-    border-radius: 1rem;
+.images-section .img-container {
+    position: relative;
 }
 
-.images-section .newImg0 {
-    grid-column-start: 1;
-    grid-column-end: 3;
+.img-container .img {
+    width: 100%;
+    border-radius: 1rem;
+    padding: 0;
 }
+
+.img-container .fav-container {
+    position: absolute;
+    width: 4rem;
+    height: 4rem;
+    top: 1.2rem;
+    left: 1.2rem;
+    background-image: var(--favourite-star);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.images-section .selected {
+    border: 0.3rem solid var(--main-color);
+    border-radius: 1rem;
+    width: fit-content;
+} /* styles for selected image*/
+
 /*  =================== Favorites section styles =================== */
 
 .favorites-section {
