@@ -10,11 +10,18 @@
     "type": "git",
     "url": "git+https://github.com/sergioiscoding/API-consumption-practice-repo.git"
   },
-  "keywords": ["practice", "api", "education"],
+  "keywords": [
+    "practice",
+    "api",
+    "education"
+  ],
   "author": "Sergio Lopez <sergioawaken@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/sergioiscoding/API-consumption-practice-repo/issues"
   },
-  "homepage": "https://github.com/sergioiscoding/API-consumption-practice-repo#readme"
+  "homepage": "https://github.com/sergioiscoding/API-consumption-practice-repo#readme",
+  "dependencies": {
+    "xmlhttprequest": "^1.8.0"
+  }
 }
