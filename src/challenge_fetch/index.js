@@ -1,95 +1,137 @@
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-// const hdrs = new Headers();
-// hdrs.append('Content-type', 'application/json')
-// hdrs.append('cors', 'no-cors')
-// hdrs.append('credentials', 'omit')
-// console.log(hdrs)
-
-// const parameters = {
-//     method: 'GET',
-//     hdrs,
-//     // body: JSON.stringify({
-        // "title": "New Product",
-        // "price": 10,
-        // "description": "A description",
-        // "categoryId": 1,
-        // "images": ["https://placeimg.com/640/480/any"]
-//     // })
-// }
 
 const API_URL_PRODUCTS = "https://api.escuelajs.co/api/v1/products";
 
-// function fetchData(urlApi){
-//     const hrds = new Headers({
-//         'Content-Type': 'application/json',
-//     })
-//     const req = new Request(urlApi, hrds)
-//     return new Promise((resolve, reject) => {
-
-//     })
-// }
-
-
-async function fetchCustom(){
-    const requ = new Request(`${API_URL_PRODUCTS}/`, {
-        method: 'POST',
-        headers: {
-            'Content-type': 'application/json'
-        },
-        body: JSON.stringify({
-            "title": "New Product",
-            "price": 10,
-            "description": "A description",
-            "categoryId": 1,
-            "images": ["https://placeimg.com/640/480/any"]
-        })
-    });
-    const res = await requ.json()
-    console.log(res)
-}
-fetchCustom()
-
-
-//using XMLHTTPRequest
-async function customFetch(urlApi){
-    const xhttp = new XMLHttpRequest();
-
-    const req = new Request(urlApi, init = {});
-
-    const hdrs = new Headers();
-    hdrs.append('Content-type', 'application/json')
-    hdrs.append('cors', 'no-cors')
-    hdrs.append('credentials', 'omit')
-
-    xhttp.open(req.method, urlApi, true)
-
-    xhttp.onreadystatechange = function (ev){
-        if(xhttp.readyState === 4 && xhttp.status === 200){
-            const res = JSON.parse(xhttp.responseText);
-            console.log(res)
+//using XMLHTTPRequest to "clone" Axios
+class customFetch { 
+    constructor(){
+        this.methods = {
+            get: 'GET',
+            post: 'POST',
+            put:'PUT',
+            delete: 'DELETE',
         }
-        else {
-            console.error(ev)
-        }
+        //instancing the prototype with its methods to access them when its needed during the requests
     }
-    xhttp.send()
+    get({
+        urlApi,
+        id = null,
+        params = null,
+        addition = null,
+    }){ 
+        this.#call({
+            urlApi, id, params, addition, method: this.methods.get
+        })
+        //calling private method to make xhttp request with its corresponding HTTP method
+    }
+    put({
+        urlApi,
+        id = null,
+        params = null,
+        addition = null,
+    }){
+        this.#call({
+            urlApi, id, params, addition, method: this.methods.put
+        })
+    }
+    post({
+        urlApi,
+        id = null,
+        params = null,
+        addition = null,
+    }){
+        this.#call({
+            urlApi, id, params, addition, method: this.methods.post
+        })
+    }
+    del({
+        urlApi,
+        id = null,
+        params = null,
+        addition = null,
+    }){
+        this.#call({
+            urlApi, id, params, addition, method: this.methods.delete
+        })
+    }
+    #call({
+        urlApi,
+        id = null,
+        params = null,
+        addition = null,
+        method = null,
+    }){
+        const xhttp = new XMLHttpRequest();
+        //creating XMLHttpRequest instance
+
+        let newApi = urlApi;
+        //storing urlApi as a variable to concat it with another variable
+
+        if(addition){
+            let newApi = `${urlApi}/ + ${id}`;
+            //newApi will be the sum of both variables
+        }
+
+        xhttp.open(method, newApi, true);
+        //opening the asynchronous communication with the newApi variable and the method pointed in the call of ' #call ' method
+
+        xhttp.setRequestHeader('Content-type', 'application/json');
+        //sending headers
+
+        xhttp.onreadystatechange = function (ev){
+            if(xhttp.readyState === 4) {
+                if(xhttp.status === 200) {
+
+                const res = JSON.parse(xhttp.responseText);
+
+                console.log(res)
+                //parsing and recieving in console result of xhttp request
+            }
+                else {
+                    console.error(ev)
+                }
+            }
+        }
+
+        let stringified = JSON.stringify(params);
+        //converting into a string the body of the request
+
+        xhttp.send(stringified)
+        //sending body
+    }
 }
 
-customFetch(API_URL_PRODUCTS)
+const custom = new customFetch();
+//instancing class
 
-// function fetchData(urlApi, callback) {
-//     let xhttp = new XMLHttpRequest();
-  
-//     xhttp.open('GET', urlApi, true);
-//     xhttp.onreadystatechange = function (event) {
-//       if (xhttp.readyState === 4) {
-//         if (xhttp.status === 200) {
-//           callback(null, JSON.parse(xhttp.responseText));
-//         } else {
-//           const error = new Error('Error' + urlApi);
-//           return callback(error, null);
-//         }
-//       }
-//     }
-//     xhttp.send();
-//   }
+custom.get({urlApi: API_URL_PRODUCTS})
+//getting the list of all products
+
+custom.put({
+    urlApi: API_URL_PRODUCTS,
+    id: 62,
+    params: {
+        "title": "Change title",
+        "price": 100
+    },
+})
+//updating a product
+
+custom.post({
+    urlApi: API_URL_PRODUCTS,
+    params: {
+        "title": "New Product",
+        "price": 10,
+        "description": "A description",
+        "categoryId": 1,
+        "images": ["https://placeimg.com/640/480/any"]
+    }
+})
+//creating a product
+
+custom.del({
+    urlApi: API_URL_PRODUCTS,
+    id: 62,
+    addition: 62
+})
+//deleting a product
