@@ -139,54 +139,6 @@ function selectedProducts(e) {
 
     console.log({wrapper})
     // TO RETURN WRAPPER
-
-
-    // const randomStrings = [
-    //     "GOvDKg",
-    //     "Kqpagj",
-    //     "Pcstup",
-    //     "skeVhS",
-    //     "TOWqxz",
-    //     "fCDTIA",
-    //     "IMaEyF",
-    //     "NnsKYu",
-    //     "TClmME",
-    //     "rMghwb"
-    // ]
-
-    // let randomNumber = Math.floor(Math.random() * 100)
-
-    // wrapper.title = randomStrings[Math.floor(Math.random() * 10)];
-    // wrapper.price = randomNumber;
-    // wrapper.description = "some good thoughtful description";
-    // wrapper.categoryId =  Math.floor(Math.random() * 13);
-    // wrapper.images = wrapper.children[0].src
-    
-    // return wrapper;
-
-    // const sendDataToFavorites = await fetch(API_URL_PRODUCTS, {
-    //     method: "POST",
-    //     headers: {
-    //         "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify({
-    //         "title": randomStrings[Math.floor(Math.random() * 10)],
-    //         "price": randomNumber,
-    //         "description": "some good thoughtful description",
-    //         "categoryId": Math.floor(Math.random() * 10),
-    //         "images": [wrapper.children[0].src]
-    //     })
-    // })
-    
-    // {
-    //     "title": "New Product",
-    //     "price": 10,
-    //     "description": "A description",
-    //     "categoryId": 1,
-    //     "images": ["https://placeimg.com/640/480/any"]
-    //   }
-    //selecting image and applying new border
-
 }
 
 function renderFavorites(){
@@ -198,7 +150,9 @@ function renderFavorites(){
 
     const favorites = imagesArray.filter( img => {
         if(img.classList[1]){
+            img.classList.toggle('selected')
             return img;
+            //removing class selected and returning the image
         }
     })
     //storing as favorites the images that are selected 
@@ -214,16 +168,57 @@ function renderFavorites(){
     //toggling original selected class from random images section to leave the favorite section with those images
 
     favorites_section.append(...favorites)
+    //appending images to favourites section
+
+    const bar1 = document.createElement('div');
+    const bar2 = document.createElement('div');
+    const bar3 = document.createElement('div');
+    bar1.classList.add('b1', 'b');
+    bar2.classList.add('b2', 'b');
+    bar3.classList.add('b3', 'b');
+    //creating internal bars for effect
+
+    const deleteIcon = document.createElement('div');
+    deleteIcon.classList.add('delete-icon');
+    deleteIcon.append(bar1, bar2, bar3)
+    //delete icon container with children
+
+    deleteIcon.addEventListener('click', e => {
+        deleteProduct(e);
+    })
+    //adding event on the delete icon to select images
+
+    favorites.forEach(i => {
+        i.append(deleteIcon);
+        i.addEventListener('click', e => {
+            selectedProducts(e);
+        })
+    })
+    //adding class of 'selected' to images in favourites section
+
+
+    console.log(favorites)
 }
 
-deleteBtn.addEventListener('click', (e) => {
-    deleteImgs(e)
+deleteBtn.addEventListener('click', () => {
+    deleteImgs()
 })
 
-async function deleteImgs(e){
-    const id = 25;
-    const deleteProduct = await fetch(`${API_URL_PRODUCTS}/${id}`)
-    console.log({deleteProduct})
+function deleteImgs(){
+    const children = [...favorites_section.children];
+    //turning into array a node list
+    
+    children.forEach(img => {
+        if(img.classList.contains('selected')){
+            img.remove()
+        }
+    })
+    //removing images from favourites section
+}
+
+function deleteProduct(e){
+    const card = e.srcElement.parentElement;
+    favorites_section.remove(card);
 }
 // async function getASingleProduct(num){
 //     const res = await fetch(`${API_URL_PRODUCTS}/${num}`);
@@ -275,19 +270,7 @@ async function uploadNewProduct(){
 }
 
 uploadNewProduct();
-deleteImgs();
 
-
-// deleteProduct: Response
-//     body: (...)
-//     bodyUsed: false
-//     headers: Headers {}
-//     ok: true
-//     redirected: false
-//     status: 200
-//     statusText: "OK"
-//     type: "cors"
-//     url: "https://api.escuelajs.co/api/v1/products
 
 // Upload product picture function
 
@@ -319,3 +302,4 @@ async function uploadProductPic(){
         //we can call the render favourites images here to load them in favourites section
     }
 }
+

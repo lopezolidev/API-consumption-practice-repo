@@ -135,3 +135,4 @@ custom.del({
     addition: 62
 })
 //deleting a product
+
