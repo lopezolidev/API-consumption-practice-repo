@@ -142,6 +142,7 @@ function selectedProducts(e) {
 }
 
 function renderFavorites(){
+
     const selected = images_section.cloneNode(true)
     //taking images_section as the container we'll resort, also creating as a clone to not cut images from the original images_section
 
@@ -150,12 +151,41 @@ function renderFavorites(){
 
     const favorites = imagesArray.filter( img => {
         if(img.classList[1]){
+            const bar1 = document.createElement('div');
+            const bar2 = document.createElement('div');
+            const bar3 = document.createElement('div');
+            bar1.classList.add('b');
+            bar2.classList.add('b');
+            bar3.classList.add('b');
+            //creating internal bars for effect
+        
+            const deleteIcon = document.createElement('div');
+            deleteIcon.classList.add('delete-icon');
+            deleteIcon.append(bar1, bar2, bar3)
+            //delete icon container with children
+        
+            deleteIcon.addEventListener('click', (e) => {
+                deleteProduct(e);
+            })
+            //adding event on the delete icon to select images
+
+            img.append(deleteIcon)
+            //appending deleting icon
+
+            img.addEventListener('click', e => {
+                selectedProducts(e)});
             img.classList.toggle('selected')
             return img;
             //removing class selected and returning the image
         }
     })
     //storing as favorites the images that are selected 
+
+    // img.append(deleteIcon);
+    // img.addEventListener('click', e => {
+    //     selectedProducts(e);
+    //     console.log('hello')
+    // })
 
     const original = [...images_section.children];
     //creating iterable variable related to original images section
@@ -166,38 +196,15 @@ function renderFavorites(){
         }  
     })
     //toggling original selected class from random images section to leave the favorite section with those images
+ 
+    for(let i = 0; i <= favorites.length; i++){
+
+        
+        favorites[i]
+    }
 
     favorites_section.append(...favorites)
     //appending images to favourites section
-
-    const bar1 = document.createElement('div');
-    const bar2 = document.createElement('div');
-    const bar3 = document.createElement('div');
-    bar1.classList.add('b1', 'b');
-    bar2.classList.add('b2', 'b');
-    bar3.classList.add('b3', 'b');
-    //creating internal bars for effect
-
-    const deleteIcon = document.createElement('div');
-    deleteIcon.classList.add('delete-icon');
-    deleteIcon.append(bar1, bar2, bar3)
-    //delete icon container with children
-
-    deleteIcon.addEventListener('click', e => {
-        deleteProduct(e);
-    })
-    //adding event on the delete icon to select images
-
-    favorites.forEach(i => {
-        i.append(deleteIcon);
-        i.addEventListener('click', e => {
-            selectedProducts(e);
-        })
-    })
-    //adding class of 'selected' to images in favourites section
-
-
-    console.log(favorites)
 }
 
 deleteBtn.addEventListener('click', () => {
@@ -207,7 +214,7 @@ deleteBtn.addEventListener('click', () => {
 function deleteImgs(){
     const children = [...favorites_section.children];
     //turning into array a node list
-    
+
     children.forEach(img => {
         if(img.classList.contains('selected')){
             img.remove()
@@ -217,8 +224,8 @@ function deleteImgs(){
 }
 
 function deleteProduct(e){
-    const card = e.srcElement.parentElement;
-    favorites_section.remove(card);
+    const card = e.target.parentElement;
+    card.remove()
 }
 // async function getASingleProduct(num){
 //     const res = await fetch(`${API_URL_PRODUCTS}/${num}`);
