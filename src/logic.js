@@ -3,16 +3,11 @@ const api = axios.create({
 })
 //configuring AXIOS basic data as default
 
-// api.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-// Here using an authorization toke to set as default the auth element when making requests, therefore not copying and pasting every time we want to make a request we must send the auth token
-
-
 //To-do:
 // Create basic fetch function to extract products from the API
 // Generate random products selection
 // display products images in section
-// add buttons functionality to alter the DOM
-// implement parameters to select and vary products selection and exploring section
+// add buttons functionality to alter the DOM for favourites and deletion
 
 const API_URL_UPLOAD = "https://api.escuelajs.co/api/v1/files/upload";
 
@@ -116,19 +111,7 @@ async function fetchData10(){
    //using try/catch as best practice
 }
 
-async function fetchCategories(){
-    const res = await fetch(`${API_URL_CATEGORIES}`);
-    const data = await res.json();
-    //fetching from categories to test "favourites" property
 
-    if (res.status !== HTTPerrors.OK){
-        productError.innerText = `Sorry, we had a ${res.status} error`
-    } else {
-        // console.log(data)
-    //fetching first category
-
-    }
-}
 fetchData10()
 //fetching products the moment the tab loads
 
@@ -181,12 +164,6 @@ function renderFavorites(){
     })
     //storing as favorites the images that are selected 
 
-    // img.append(deleteIcon);
-    // img.addEventListener('click', e => {
-    //     selectedProducts(e);
-    //     console.log('hello')
-    // })
-
     const original = [...images_section.children];
     //creating iterable variable related to original images section
 
@@ -196,20 +173,10 @@ function renderFavorites(){
         }  
     })
     //toggling original selected class from random images section to leave the favorite section with those images
- 
-    for(let i = 0; i <= favorites.length; i++){
-
-        
-        favorites[i]
-    }
 
     favorites_section.append(...favorites)
     //appending images to favourites section
 }
-
-deleteBtn.addEventListener('click', () => {
-    deleteImgs()
-})
 
 function deleteImgs(){
     const children = [...favorites_section.children];
@@ -227,57 +194,6 @@ function deleteProduct(e){
     const card = e.target.parentElement;
     card.remove()
 }
-// async function getASingleProduct(num){
-//     const res = await fetch(`${API_URL_PRODUCTS}/${num}`);
-//     const data = await res.json();
-
-//     // console.log(data)
-// }
-
-// getASingleProduct(251)
-//just as an example
-
-async function uploadNewProduct(){
-    const res = await api.post('/products',{
-        "title": "A brand new special digital product",
-        "price": 9999999,
-        "description": "some random descrition",
-        "categoryId": 2,
-        "images": ["https://placeimg.com/640/480/tech"]
-    })
-    //axios is simpler to use just by sending the method directly when calling the instance, also first parameter is the missing part of our API to facilitate the process of storing our URL and as second argument we send the body that axios already stringifyies for us
- 
-
-    // const res = await fetch(API_URL_PRODUCTS, {
-    //     method: 'POST',
-    //     headers: {
-    //         "Content-Type": "application/json" 
-    //         //here refers to the kind of content that our backend supports, most of them support application/json, even though the documentation must clarify how should we load, delete, put or any other HTTP method using a specific Content-Type
-    //     },
-    //     body: JSON.stringify({
-    //         "title": "A brand new special digital product",
-    //         "price": 9999999,
-    //         "description": "some random descrition",
-    //         "categoryId": 2,
-    //         "images": ["https://placeimg.com/640/480/tech"]
-    // //     })
-    //     //we must stringify the format of the body with JSON to make it a plain text from JSON, because we ignore in which language our backend will process this request
-    // })
-    // //sending POST request to the API, this time, manually we're introducing the method, headers and the body, just as the documentation points
-    // console.log({res})
-
-    // const data = await res.json();
-    
-    if (res.status !== HTTPerrors.OK && res.status !== 201){
-        productError.innerText = `Sorry, we had a ${res.status} error about ${res.data}`
-    }  else {
-        console.log(res.status)
-        console.log('the product was succesfully uploaded!')
-    }
-}
-
-uploadNewProduct();
-
 
 // Upload product picture function
 
@@ -310,3 +226,8 @@ async function uploadProductPic(){
     }
 }
 
+// DELETION event
+
+deleteBtn.addEventListener('click', () => {
+    deleteImgs()
+})
